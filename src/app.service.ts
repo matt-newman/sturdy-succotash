@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as data from '../data.json';
+import * as data from '../data.json'; // could abstract this to be storage class, easier to mock
 
 // const userShape = {
 //   "title": "Your next delivery for <cat names, separated by comma or 'and'>",
@@ -8,36 +8,78 @@ import * as data from '../data.json';
 //   "freeGift": <true if the total price exceeds 120 pounds, otherwise false>
 // }
 
-type userData = {
-  "title": string,
-  "message": string,
-  "totalPrice": number,
-  "freeGift": Boolean,
+// {
+//   "id": "618f4ed6-1c5b-4993-a149-f64700bf31dd",
+//   "firstName": "Cordell",
+//   "lastName": "Koepp-Torphy",
+//   "email": "Cordell.Koepp-Torphy23@hotmail.com",
+//   "cats": [
+//     {
+//       "name": "Betsy",
+//       "subscriptionActive": true,
+//       "breed": "Savannah",
+//       "pouchSize": "E"
+//     }
+//   ]
+// },
+
+// {
+//   "message": "Welcome to KatKin, <full-name>! We're super excited for <cat1> and <cat2> to join the KatKin club and start loving fresh!"
+// }
+
+// TODO: in a larger app / seperate these into their own folders, but this small doesn't need the indirection for the tidiness trade-off
+
+type Cat = {
+  name: string,
+  subscriptionActive: boolean,
+  breed: string,
+  pouchSize: string,
+}
+
+export type User = {
+  id: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  cats: Array<Cat>,
 };
 
-const userShape = {
-  "title": "",
-  "message": "",
-  "totalPrice": 0,
-  "freeGift": false,
+const emptyUser: User = {
+  id: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  cats: [],
+};
+
+export type Delivery = {
+  title: string,
+  message: string,
+  totalPrice: number,
+  freeGift: boolean,
+};
+
+const emptyDelivery = {
+  title: "",
+  message: "",
+  totalPrice: -1,
+  freeGift: false,
 };
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+  getUser(userId: string): User {
+    let user = data.find(({ id }) => id === userId);
 
-  getUser( id: string ): any {
-    let numbericId = parseInt(id, 10);
-    let user: any = data[numbericId];
-    
     if (!user) {
-      console.log( 'user not found with numeric id', id );
-
-      user = data.find(record => record?.id === id) || {};
+      console.log('user not found', { userId, data });
+      user = emptyUser;
     }
 
     return user;
+  }
+
+  getNextDelivery(userId: string): Delivery {
+    return emptyDelivery;
   }
 }
