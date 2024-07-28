@@ -29,6 +29,22 @@ import * as data from '../data.json'; // could abstract this to be storage class
 
 // TODO: in a larger app / seperate these into their own folders, but this small doesn't need the indirection for the tidiness trade-off
 
+// I got the breeds by doing this, so if I wanted I could make them an enum, but doesn't seem worth it:
+
+/*
+users.reduce((prev, curr) => {
+    curr?.cats?.map(cat => {
+      if (!prev.contains( cat.breed )) {
+          prev.push( cat.breed );
+      }
+    });
+    return prev;
+}, [])
+... there were 55
+
+did the same for pouchSize, found its A-F
+*/
+
 type Cat = {
   name: string,
   subscriptionActive: boolean,
@@ -66,6 +82,24 @@ const emptyDelivery = {
   freeGift: false,
 };
 
+const pluralise = ( terms: Array<string>, seperator:string = ", ", concatTerm:string = " and " ): string => {
+  let output = "";
+  const last = terms.pop() as string;
+
+  if (terms.length === 0) {
+    return last;
+  }
+
+  output = terms.join(seperator);
+  output = output + `${concatTerm}${last}`
+
+  return output;
+}
+
+const pluraliseCats = ( cat: Array<Cat> ): string => {
+  return "";
+}
+
 @Injectable()
 export class AppService {
   getUser(userId: string): User {
@@ -80,6 +114,13 @@ export class AppService {
   }
 
   getNextDelivery(userId: string): Delivery {
-    return emptyDelivery;
+    let delivery = emptyDelivery;
+    const user = this.getUser(userId);
+  
+    const temp = pluralise(['a', 'c']);
+
+    console.log( {temp} );
+
+    return delivery;
   }
 }
