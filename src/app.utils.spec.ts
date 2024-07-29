@@ -38,10 +38,10 @@ describe('Utils', () => {
         const prices = {
             "A": 55.5,
             "B": 59.5,
-            "C": 62.7,
+            "C": 62.75,
             "D": 66.0,
             "E": 69.0,
-            "F": 71.2,
+            "F": 71.25,
         }
 
         // A -> 55.50 GBP
@@ -61,32 +61,42 @@ describe('Utils', () => {
 
         it('should return 55.50 for 1 type A pouch', () => {
             pouchSizes = ['A'];
-            expect(calculatePrice(pouchSizes)).toBe(55.5);
+            expect(calculatePrice(pouchSizes)).toBe(prices.A);
         });
 
         it('should return 59.50 for 1 type B pouch', () => {
             pouchSizes = ['B'];
-            expect(calculatePrice(pouchSizes)).toBe(59.5);
+            expect(calculatePrice(pouchSizes)).toBe(prices.B);
         });
 
         it('should return 62.75 for 1 type C pouch', () => {
             pouchSizes = ['C'];
-            expect(calculatePrice(pouchSizes)).toBe(62.75);
+            expect(calculatePrice(pouchSizes)).toBe(prices.C);
         });
 
         it('should return 66.00 for 1 type D pouch', () => {
             pouchSizes = ['D'];
-            expect(calculatePrice(pouchSizes)).toBe(66.00);
+            expect(calculatePrice(pouchSizes)).toBe(prices.D);
         });
 
         it('should return 69.00 for 1 type E pouch', () => {
             pouchSizes = ['E'];
-            expect(calculatePrice(pouchSizes)).toBe(69.00);
+            expect(calculatePrice(pouchSizes)).toBe(prices.E);
         });
 
         it('should return 71.25 for 1 type F pouch', () => {
             pouchSizes = ['F'];
-            expect(calculatePrice(pouchSizes)).toBe(71.25);
+            expect(calculatePrice(pouchSizes)).toBe(prices.F);
+        });
+
+        it('should return 384 for all the pouches together', () => {
+            pouchSizes = 'CCC'.split('');
+            expect(calculatePrice(pouchSizes)).toBe(3 * prices.C);
+        });
+
+        it('should return 384 for all the pouches together', () => {
+            pouchSizes = 'ABCDEF'.split('');
+            expect(calculatePrice(pouchSizes)).toBe(384);
         });
     })
 });
