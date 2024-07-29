@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { pluralise } from './app.utils';
 import * as data from '../data.json'; // could abstract this to be storage class, easier to mock
 
 // const userShape = {
@@ -82,31 +83,13 @@ const emptyDelivery = {
   freeGift: false,
 };
 
-const pluralise = ( terms: Array<string>, seperator:string = ", ", concatTerm:string = " and " ): string => {
-  let output = "";
-  const last = terms.pop() as string;
-
-  if (terms.length === 0) {
-    return last;
-  }
-
-  output = terms.join(seperator);
-  output = output + `${concatTerm}${last}`
-
-  return output;
-}
-
-const pluraliseCats = ( cat: Array<Cat> ): string => {
-  return "";
-}
-
 @Injectable()
 export class AppService {
   getUser(userId: string): User {
     let user = data.find(({ id }) => id === userId);
 
     if (!user) {
-      console.log('user not found', { userId, data });
+      console.error('user not found', { userId });
       user = emptyUser;
     }
 
@@ -116,10 +99,11 @@ export class AppService {
   getNextDelivery(userId: string): Delivery {
     let delivery = emptyDelivery;
     const user = this.getUser(userId);
-  
+
+    // TODO: go from here
     const temp = pluralise(['a', 'c']);
 
-    console.log( {temp} );
+    console.log({ temp });
 
     return delivery;
   }
