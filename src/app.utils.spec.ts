@@ -68,5 +68,25 @@ describe('Utils', () => {
             pouchSizes = ['B'];
             expect(calculatePrice(pouchSizes)).toBe(59.5);
         });
+
+        it('should return 62.75 for 1 type C pouch', () => {
+            pouchSizes = ['C'];
+            expect(calculatePrice(pouchSizes)).toBe(62.75);
+        });
+
+        it('should return 66.00 for 1 type D pouch', () => {
+            pouchSizes = ['D'];
+            expect(calculatePrice(pouchSizes)).toBe(66.00);
+        });
+
+        it('should return 69.00 for 1 type E pouch', () => {
+            pouchSizes = ['E'];
+            expect(calculatePrice(pouchSizes)).toBe(69.00);
+        });
+
+        it('should return 71.25 for 1 type F pouch', () => {
+            pouchSizes = ['F'];
+            expect(calculatePrice(pouchSizes)).toBe(71.25);
+        });
     })
 });
