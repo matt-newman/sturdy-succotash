@@ -2,33 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { calculatePrice, pluralise } from './app.utils';
 import * as data from '../data.json'; // could abstract this to be storage class, easier to mock
 
-// const userShape = {
-//   "title": "Your next delivery for <cat names, separated by comma or 'and'>",
-//   "message": "Hey <firstName>! In two days' time, we'll be charging you for your next order for <cat names, formatted as described below>'s fresh food.",
-//   "totalPrice": <total price, calculated via the formula shown in a later section in this README>,
-//   "freeGift": <true if the total price exceeds 120 pounds, otherwise false>
-// }
+// Note: in a larger app / seperate these into their own folders, but this small doesn't need the indirection for the tidiness trade-off
 
-// {
-//   "id": "618f4ed6-1c5b-4993-a149-f64700bf31dd",
-//   "firstName": "Cordell",
-//   "lastName": "Koepp-Torphy",
-//   "email": "Cordell.Koepp-Torphy23@hotmail.com",
-//   "cats": [
-//     {
-//       "name": "Betsy",
-//       "subscriptionActive": true,
-//       "breed": "Savannah",
-//       "pouchSize": "E"
-//     }
-//   ]
-// },
-
-// {
-//   "message": "Welcome to KatKin, <full-name>! We're super excited for <cat1> and <cat2> to join the KatKin club and start loving fresh!"
-// }
-
-// TODO: in a larger app / seperate these into their own folders, but this small doesn't need the indirection for the tidiness trade-off
+// Note: For something this small I'd probably have the MFE alongside the same codebase and serve it from the nestjs root, but I suspect the test is looking for seperation and handling calls to and API
 
 // I got the breeds by doing this, so if I wanted I could make them an enum, but doesn't seem worth it:
 
@@ -42,8 +18,6 @@ users.reduce((prev, curr) => {
     return prev;
 }, [])
 ... there were 55
-
-did the same for pouchSize, found its A-F
 */
 
 type Cat = {
@@ -100,11 +74,18 @@ export class AppService {
     let delivery = emptyDelivery;
     const user = this.getUser(userId);
 
+    if (!user?.firstName || user?.cats?.length === 0) {
+      // something went wrong, return early, could log error
+      return delivery;
+    }
+
     const catsWithSubscription = user.cats?.filter(cat => { 
       return cat.subscriptionActive === true;
     });
 
-    // Note: these could be a reduce to lower the amount of looping
+    // TODO: handle the case of a user with no active cats?
+
+    // Note: the following could combinded be a reduce to lower the amount of looping, but I feel this has better readablity
     const catNames = pluralise(catsWithSubscription.map(cat => cat.name));
     const totalPrice = calculatePrice(catsWithSubscription.map(cat => cat.pouchSize));
     const eligableForGift = totalPrice > 120; // could move this to pricing as by its current mechanism it directly relates

@@ -89,7 +89,12 @@ describe('Utils', () => {
             expect(calculatePrice(pouchSizes)).toBe(prices.F);
         });
 
-        it('should return 384 for all the pouches together', () => {
+        it('should return 115.00 for pouches A and B', () => {
+            pouchSizes = 'AB'.split('');
+            expect(calculatePrice(pouchSizes)).toBe(115);
+        });
+
+        it('should return 188.25 for all the pouches together', () => {
             pouchSizes = 'CCC'.split('');
             expect(calculatePrice(pouchSizes)).toBe(3 * prices.C);
         });
