@@ -20,34 +20,34 @@ users.reduce((prev, curr) => {
 ... there were 55
 */
 
-type Cat = {
-  name: string,
-  subscriptionActive: boolean,
-  breed: string,
-  pouchSize: string,
+export interface Cat {
+  name: string;
+  subscriptionActive: boolean;
+  breed: string;
+  pouchSize: string;
 }
 
-export type User = {
-  id: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  cats: Array<Cat>,
+export interface Customer {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  cats: Cat[];
+}
+
+export interface Delivery {
+  title: string;
+  message: string;
+  totalPrice: number;
+  freeGift: boolean;
 };
 
-const emptyUser: User = {
+const customerShell: Customer = {
   id: "",
   firstName: "",
   lastName: "",
   email: "",
   cats: [],
-};
-
-export type Delivery = {
-  title: string,
-  message: string,
-  totalPrice: number,
-  freeGift: boolean,
 };
 
 const emptyDelivery = {
@@ -59,12 +59,12 @@ const emptyDelivery = {
 
 @Injectable()
 export class AppService {
-  getUser(userId: string): User {
+  getCustomer(userId: string): Customer {
     let user = data.find(({ id }) => id === userId);
 
     if (!user) {
       console.error('user not found', { userId });
-      user = emptyUser;
+      user = customerShell;
     }
 
     return user;
@@ -72,7 +72,7 @@ export class AppService {
 
   getNextDelivery(userId: string): Delivery {
     let delivery = emptyDelivery;
-    const user = this.getUser(userId);
+    const user = this.getCustomer(userId);
 
     if (!user?.firstName || user?.cats?.length === 0) {
       // something went wrong, return early, could log error

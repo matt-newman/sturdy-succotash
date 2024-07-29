@@ -9,7 +9,7 @@ describe('AppService', () => {
     const kayleighId = 'ff535484-6880-4653-b06e-89983ecf4ed5';
     const wilhelmineId = '3dfdc5cf-b8ed-40f7-a5ca-5e88ad103b60';
     
-    const wilhelmineUserResult = {
+    const wilhelmineCustomerData = {
         "id": "3dfdc5cf-b8ed-40f7-a5ca-5e88ad103b60",
         "firstName": "Wilhelmine",
         "lastName": "Senger",
@@ -30,9 +30,9 @@ describe('AppService', () => {
         "freeGift": true
     }
 
-    describe('getUser', () => {
+    describe('getCustomer', () => {
         it('should return the correct data for the given user Wilhelmine', () => {
-            expect(app.getUser(wilhelmineId)).toStrictEqual(wilhelmineUserResult);
+            expect(app.getCustomer(wilhelmineId)).toStrictEqual(wilhelmineCustomerData);
         });
     })
 
