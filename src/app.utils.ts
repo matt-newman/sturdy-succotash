@@ -11,6 +11,20 @@ export const pluralise = (terms: Array<string>, seperator: string = ", ", joinin
     return output;
 }
 
-export const calculatePrice = ( pouchSizes: Array<string> = [] ) => {
-    return 0;
+export const calculatePrice = ( pouchSizes: Array<string> = [] ): number => {
+    type Prices = { A: number, B: number, C: number, D: number, E: number, F: number };
+    const prices = {
+        "A": 55.5,
+        "B": 59.5,
+        "C": 62.7,
+        "D": 66.0,
+        "E": 69.0,
+        "F": 71.2,
+    };
+
+    const totalPrice = pouchSizes.reduce((prev:number, curr:string) => {
+        return prev + prices[curr as keyof Prices];
+    }, 0);
+
+    return totalPrice;
 }
