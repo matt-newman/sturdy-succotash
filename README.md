@@ -1,7 +1,7 @@
 # Submission
 
-https://github.com/matt-newman/sturdy-succotash
-https://github.com/matt-newman/special-octo-enigma
+ - https://github.com/matt-newman/sturdy-succotash
+ - https://github.com/matt-newman/special-octo-enigma
 
 The original README is available in the TASK.md file
 
