@@ -100,10 +100,16 @@ export class AppService {
     let delivery = emptyDelivery;
     const user = this.getUser(userId);
 
-    // TODO: go from here
-    const temp = pluralise(['a', 'c']);
+    const catsWithSubscription = user.cats?.filter(cat => { 
+      return cat.subscriptionActive === false;
+    }).map(cat => cat.name);
+    
+    const catNames = pluralise(catsWithSubscription);
 
-    console.log({ temp });
+    delivery.title = `Your next delivery for ${catNames}`;
+    delivery.message = `Hey ${user.firstName}! In two days' time, we'll be charging you for your next order for ${catNames} fresh food.`;
+
+    console.log({ delivery });
 
     return delivery;
   }
