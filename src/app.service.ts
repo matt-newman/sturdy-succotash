@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { pluralise } from './app.utils';
+import { calculatePrice, pluralise } from './app.utils';
 import * as data from '../data.json'; // could abstract this to be storage class, easier to mock
 
 // const userShape = {
@@ -101,15 +101,20 @@ export class AppService {
     const user = this.getUser(userId);
 
     const catsWithSubscription = user.cats?.filter(cat => { 
-      return cat.subscriptionActive === false;
-    }).map(cat => cat.name);
-    
-    const catNames = pluralise(catsWithSubscription);
+      return cat.subscriptionActive === true;
+    });
+
+    // Note: these could be a reduce to lower the amount of looping
+    const catNames = pluralise(catsWithSubscription.map(cat => cat.name));
+    const totalPrice = calculatePrice(catsWithSubscription.map(cat => cat.pouchSize));
+    const eligableForGift = totalPrice > 120; // could move this to pricing as by its current mechanism it directly relates
 
     delivery.title = `Your next delivery for ${catNames}`;
-    delivery.message = `Hey ${user.firstName}! In two days' time, we'll be charging you for your next order for ${catNames} fresh food.`;
+    delivery.message = `Hey ${user.firstName}! In two days' time, we'll be charging you for your next order for ${catNames}'s fresh food.`;
+    delivery.totalPrice = totalPrice;
+    delivery.freeGift = eligableForGift;
 
-    console.log({ delivery });
+    // console.log({ user, delivery });1
 
     return delivery;
   }
