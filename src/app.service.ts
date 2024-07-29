@@ -59,20 +59,20 @@ const emptyDelivery = {
 
 @Injectable()
 export class AppService {
-  getCustomer(userId: string): Customer {
-    let user = data.find(({ id }) => id === userId);
+  getCustomer(customerId: string): Customer {
+    let customer = data.find(({ id }) => id === customerId);
 
-    if (!user) {
-      console.error('user not found', { userId });
-      user = customerShell;
+    if (!customer) {
+      console.error('customer not found', { customerId });
+      customer = customerShell;
     }
 
-    return user;
+    return customer;
   }
 
-  getNextDelivery(userId: string): Delivery {
+  getNextDelivery(customerId: string): Delivery {
     let delivery = emptyDelivery;
-    const user = this.getCustomer(userId);
+    const user = this.getCustomer(customerId);
 
     if (!user?.firstName || user?.cats?.length === 0) {
       // something went wrong, return early, could log error
