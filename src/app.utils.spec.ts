@@ -1,4 +1,3 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { calculatePrice, pluralise } from './app.utils';
 
 describe('Utils', () => {

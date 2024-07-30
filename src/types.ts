@@ -3,19 +3,20 @@ export interface Cat {
     subscriptionActive: boolean;
     breed: string;
     pouchSize: string;
-  }
-  
-  export interface Customer {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    cats: Cat[];
-  }
-  
-  export interface Delivery {
+}
+
+export interface Delivery {
     title: string;
     message: string;
     totalPrice: number;
     freeGift: boolean;
-  };
+};
+
+export interface Prices {
+    A: number,
+    B: number,
+    C: number,
+    D: number,
+    E: number,
+    F: number
+};

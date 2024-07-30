@@ -1,13 +1,14 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Customer, Delivery } from './types';
+import { Delivery } from './types';
+import { CustomerDetails } from './customer/customer';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('user/:id') // TODO: different controller or routing for larger app
-  getCustomer(@Param('id') id: string): Customer {
+  getCustomer(@Param('id') id: string): CustomerDetails {
     // console.log(params.id);
     return this.appService.getCustomer(id);
   }
