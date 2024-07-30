@@ -1,3 +1,4 @@
+// could make the args to this env vars if wanted
 export const pluralise = (terms: Array<string>, seperator: string = ", ", joiningTerm: string = " and "): string => {
     let output = "";
     const last = terms.pop() as string;
@@ -13,7 +14,8 @@ export const pluralise = (terms: Array<string>, seperator: string = ", ", joinin
 
 export const calculatePrice = ( pouchSizes: Array<string> = [] ): number => {
     type Prices = { A: number, B: number, C: number, D: number, E: number, F: number };
-    const prices = {
+    // could make prices and env vars
+    const PRICES = {
         "A": 55.5,
         "B": 59.5,
         "C": 62.75,
@@ -23,7 +25,7 @@ export const calculatePrice = ( pouchSizes: Array<string> = [] ): number => {
     };
 
     const totalPrice = pouchSizes.reduce((prev:number, curr:string) => {
-        return prev + prices[curr as keyof Prices];
+        return prev + PRICES[curr as keyof Prices];
     }, 0);
 
     return totalPrice;
