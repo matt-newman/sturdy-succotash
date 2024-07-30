@@ -1,5 +1,5 @@
-import { PRICES } from "./constants";
-import { Prices } from "./types";
+import { PRICES } from "../constants";
+import { Prices } from "../types";
 
 // could make the args to this env vars if wanted
 export const pluralise = (terms: Array<string>, seperator: string = ", ", joiningTerm: string = " and "): string => {

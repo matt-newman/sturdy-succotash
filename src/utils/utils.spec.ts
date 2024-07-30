@@ -1,4 +1,4 @@
-import { calculatePrice, pluralise } from './app.utils';
+import { calculatePrice, pluralise } from './utils';
 
 describe('Utils', () => {
     describe('pluralise', () => {

@@ -1,4 +1,4 @@
-import { calculatePrice, pluralise } from '../app.utils';
+import { calculatePrice, pluralise } from '../utils/utils';
 import { Cat, Delivery } from '../types';
 import { FREE_GIFT_PRICE_POINT } from '../constants';
 import * as customerData from '../../data.json';

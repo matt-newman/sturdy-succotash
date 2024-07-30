@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Delivery } from './types';
 import { Customer, CustomerDetails } from './customer/customer';
+import { outputData } from './helper/helper';
 
 // Note: in a larger app / seperate these into their own folders, but this small doesn't need the indirection for the tidiness trade-off
 
@@ -30,5 +31,10 @@ export class AppService {
   getNextDelivery(customerId: string): Delivery {
     const customer = new Customer(customerId);
     return customer.getDeliveryInfo();
+  }
+
+  // helper function for testers, wouldn't include in actual app:
+  outputData() {
+    return outputData();
   }
 }
